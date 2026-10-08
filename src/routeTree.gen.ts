@@ -10,33 +10,189 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as CartRouteImport } from './routes/cart'
+import { Route as CheckoutRouteImport } from './routes/checkout'
+import { Route as ContactRouteImport } from './routes/contact'
+import { Route as GiftCardsRouteImport } from './routes/gift-cards'
+import { Route as LocationsRouteImport } from './routes/locations'
+import { Route as LoyaltyRouteImport } from './routes/loyalty'
+import { Route as MenuRouteImport } from './routes/menu'
+import { Route as OrderRouteImport } from './routes/order'
+import { Route as OrderConfirmationRouteImport } from './routes/order-confirmation'
+import { Route as OurStoryRouteImport } from './routes/our-story'
+import { Route as LocationsIndexRouteImport } from './routes/locations.index'
+import { Route as LocationsShermanOaksRouteImport } from './routes/locations.sherman-oaks'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const CartRoute = CartRouteImport.update({
+  id: '/cart',
+  path: '/cart',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CheckoutRoute = CheckoutRouteImport.update({
+  id: '/checkout',
+  path: '/checkout',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ContactRoute = ContactRouteImport.update({
+  id: '/contact',
+  path: '/contact',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const GiftCardsRoute = GiftCardsRouteImport.update({
+  id: '/gift-cards',
+  path: '/gift-cards',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LocationsRoute = LocationsRouteImport.update({
+  id: '/locations',
+  path: '/locations',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LoyaltyRoute = LoyaltyRouteImport.update({
+  id: '/loyalty',
+  path: '/loyalty',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const MenuRoute = MenuRouteImport.update({
+  id: '/menu',
+  path: '/menu',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const OrderRoute = OrderRouteImport.update({
+  id: '/order',
+  path: '/order',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const OrderConfirmationRoute = OrderConfirmationRouteImport.update({
+  id: '/order-confirmation',
+  path: '/order-confirmation',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const OurStoryRoute = OurStoryRouteImport.update({
+  id: '/our-story',
+  path: '/our-story',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LocationsIndexRoute = LocationsIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => LocationsRoute,
+} as any)
+const LocationsShermanOaksRoute = LocationsShermanOaksRouteImport.update({
+  id: '/sherman-oaks',
+  path: '/sherman-oaks',
+  getParentRoute: () => LocationsRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/cart': typeof CartRoute
+  '/checkout': typeof CheckoutRoute
+  '/contact': typeof ContactRoute
+  '/gift-cards': typeof GiftCardsRoute
+  '/locations': typeof LocationsRouteWithChildren
+  '/loyalty': typeof LoyaltyRoute
+  '/menu': typeof MenuRoute
+  '/order': typeof OrderRoute
+  '/order-confirmation': typeof OrderConfirmationRoute
+  '/our-story': typeof OurStoryRoute
+  '/locations/sherman-oaks': typeof LocationsShermanOaksRoute
+  '/locations/': typeof LocationsIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/cart': typeof CartRoute
+  '/checkout': typeof CheckoutRoute
+  '/contact': typeof ContactRoute
+  '/gift-cards': typeof GiftCardsRoute
+  '/loyalty': typeof LoyaltyRoute
+  '/menu': typeof MenuRoute
+  '/order': typeof OrderRoute
+  '/order-confirmation': typeof OrderConfirmationRoute
+  '/our-story': typeof OurStoryRoute
+  '/locations/sherman-oaks': typeof LocationsShermanOaksRoute
+  '/locations': typeof LocationsIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/cart': typeof CartRoute
+  '/checkout': typeof CheckoutRoute
+  '/contact': typeof ContactRoute
+  '/gift-cards': typeof GiftCardsRoute
+  '/locations': typeof LocationsRouteWithChildren
+  '/loyalty': typeof LoyaltyRoute
+  '/menu': typeof MenuRoute
+  '/order': typeof OrderRoute
+  '/order-confirmation': typeof OrderConfirmationRoute
+  '/our-story': typeof OurStoryRoute
+  '/locations/sherman-oaks': typeof LocationsShermanOaksRoute
+  '/locations/': typeof LocationsIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths:
+    | '/'
+    | '/cart'
+    | '/checkout'
+    | '/contact'
+    | '/gift-cards'
+    | '/locations'
+    | '/loyalty'
+    | '/menu'
+    | '/order'
+    | '/order-confirmation'
+    | '/our-story'
+    | '/locations/sherman-oaks'
+    | '/locations/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to:
+    | '/'
+    | '/cart'
+    | '/checkout'
+    | '/contact'
+    | '/gift-cards'
+    | '/loyalty'
+    | '/menu'
+    | '/order'
+    | '/order-confirmation'
+    | '/our-story'
+    | '/locations/sherman-oaks'
+    | '/locations'
+  id:
+    | '__root__'
+    | '/'
+    | '/cart'
+    | '/checkout'
+    | '/contact'
+    | '/gift-cards'
+    | '/locations'
+    | '/loyalty'
+    | '/menu'
+    | '/order'
+    | '/order-confirmation'
+    | '/our-story'
+    | '/locations/sherman-oaks'
+    | '/locations/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  CartRoute: typeof CartRoute
+  CheckoutRoute: typeof CheckoutRoute
+  ContactRoute: typeof ContactRoute
+  GiftCardsRoute: typeof GiftCardsRoute
+  LocationsRoute: typeof LocationsRouteWithChildren
+  LoyaltyRoute: typeof LoyaltyRoute
+  MenuRoute: typeof MenuRoute
+  OrderRoute: typeof OrderRoute
+  OrderConfirmationRoute: typeof OrderConfirmationRoute
+  OurStoryRoute: typeof OurStoryRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -48,11 +204,119 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/cart': {
+      id: '/cart'
+      path: '/cart'
+      fullPath: '/cart'
+      preLoaderRoute: typeof CartRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/checkout': {
+      id: '/checkout'
+      path: '/checkout'
+      fullPath: '/checkout'
+      preLoaderRoute: typeof CheckoutRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/contact': {
+      id: '/contact'
+      path: '/contact'
+      fullPath: '/contact'
+      preLoaderRoute: typeof ContactRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/gift-cards': {
+      id: '/gift-cards'
+      path: '/gift-cards'
+      fullPath: '/gift-cards'
+      preLoaderRoute: typeof GiftCardsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/locations': {
+      id: '/locations'
+      path: '/locations'
+      fullPath: '/locations'
+      preLoaderRoute: typeof LocationsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/loyalty': {
+      id: '/loyalty'
+      path: '/loyalty'
+      fullPath: '/loyalty'
+      preLoaderRoute: typeof LoyaltyRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/menu': {
+      id: '/menu'
+      path: '/menu'
+      fullPath: '/menu'
+      preLoaderRoute: typeof MenuRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/order': {
+      id: '/order'
+      path: '/order'
+      fullPath: '/order'
+      preLoaderRoute: typeof OrderRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/order-confirmation': {
+      id: '/order-confirmation'
+      path: '/order-confirmation'
+      fullPath: '/order-confirmation'
+      preLoaderRoute: typeof OrderConfirmationRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/our-story': {
+      id: '/our-story'
+      path: '/our-story'
+      fullPath: '/our-story'
+      preLoaderRoute: typeof OurStoryRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/locations/': {
+      id: '/locations/'
+      path: '/'
+      fullPath: '/locations/'
+      preLoaderRoute: typeof LocationsIndexRouteImport
+      parentRoute: typeof LocationsRoute
+    }
+    '/locations/sherman-oaks': {
+      id: '/locations/sherman-oaks'
+      path: '/sherman-oaks'
+      fullPath: '/locations/sherman-oaks'
+      preLoaderRoute: typeof LocationsShermanOaksRouteImport
+      parentRoute: typeof LocationsRoute
+    }
   }
 }
 
+interface LocationsRouteChildren {
+  LocationsShermanOaksRoute: typeof LocationsShermanOaksRoute
+  LocationsIndexRoute: typeof LocationsIndexRoute
+}
+
+const LocationsRouteChildren: LocationsRouteChildren = {
+  LocationsShermanOaksRoute: LocationsShermanOaksRoute,
+  LocationsIndexRoute: LocationsIndexRoute,
+}
+
+const LocationsRouteWithChildren = LocationsRoute._addFileChildren(
+  LocationsRouteChildren,
+)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  CartRoute: CartRoute,
+  CheckoutRoute: CheckoutRoute,
+  ContactRoute: ContactRoute,
+  GiftCardsRoute: GiftCardsRoute,
+  LocationsRoute: LocationsRouteWithChildren,
+  LoyaltyRoute: LoyaltyRoute,
+  MenuRoute: MenuRoute,
+  OrderRoute: OrderRoute,
+  OrderConfirmationRoute: OrderConfirmationRoute,
+  OurStoryRoute: OurStoryRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
