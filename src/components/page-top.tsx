@@ -1,0 +1,1 @@
+export function PageTop({title,kicker,description}:{title:string;kicker?:string;description?:string}) { return <div className="page-top">{kicker&&<div className="section-kicker">{kicker}</div>}<h1>{title}</h1>{description&&<p>{description}</p>}</div>; }
