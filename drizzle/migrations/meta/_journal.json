@@ -1,0 +1,20 @@
+{
+  "version": "7",
+  "dialect": "postgresql",
+  "entries": [
+    {
+      "idx": 0,
+      "version": "7",
+      "when": 1795091658242,
+      "tag": "0000_create_loyalty_core",
+      "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1795091721832,
+      "tag": "0001_loyalty_profiles_and_functions",
+      "breakpoints": true
+    }
+  ]
+}
