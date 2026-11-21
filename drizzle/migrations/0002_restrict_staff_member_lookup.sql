@@ -1,0 +1,1 @@
+REVOKE EXECUTE ON FUNCTION public.staff_find_member(text) FROM PUBLIC, anon, authenticated;

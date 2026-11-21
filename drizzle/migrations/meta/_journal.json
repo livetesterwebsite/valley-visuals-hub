@@ -15,6 +15,13 @@
       "when": 1795091721832,
       "tag": "0001_loyalty_profiles_and_functions",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1795247000145,
+      "tag": "0002_restrict_staff_member_lookup",
+      "breakpoints": true
     }
   ]
 }
