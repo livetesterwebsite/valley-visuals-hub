@@ -1,19 +1,21 @@
 export type LoyaltyTierId = 'sprout' | 'grounded' | 'valley-vip';
 
-export type LoyaltyEntry = {
-  delta: number;
-  type: 'earn' | 'redeem' | 'bonus' | 'birthday' | 'referral' | 'expire' | 'adjustment';
-  created_at: string;
-};
-
-export const loyaltyTiers: ReadonlyArray<{
+type LoyaltyTier = {
   id: LoyaltyTierId;
   name: string;
   minEarned: number;
   maxEarned: number | null;
   pointsPerDollar: number;
   perks: readonly string[];
-}> = [
+};
+
+export type LoyaltyEntry = {
+  delta: number;
+  type: 'earn' | 'redeem' | 'bonus' | 'birthday' | 'referral' | 'expire' | 'adjustment';
+  created_at: string;
+};
+
+export const loyaltyTiers: readonly [LoyaltyTier, LoyaltyTier, LoyaltyTier] = [
   {
     id: 'sprout',
     name: 'Sprout',
@@ -62,7 +64,7 @@ export const loyaltyRewards: ReadonlyArray<{
 
 const tierById = new Map(loyaltyTiers.map((tier) => [tier.id, tier]));
 
-export function tierForEarnedPoints(earnedPoints: number): (typeof loyaltyTiers)[number] {
+export function tierForEarnedPoints(earnedPoints: number): LoyaltyTier {
   const safePoints = Math.max(0, Math.floor(earnedPoints));
   return [...loyaltyTiers].reverse().find((tier) => safePoints >= tier.minEarned) ?? loyaltyTiers[0];
 }
