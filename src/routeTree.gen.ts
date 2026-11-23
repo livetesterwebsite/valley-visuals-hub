@@ -10,6 +10,7 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as AuthRouteImport } from './routes/auth'
 import { Route as CartRouteImport } from './routes/cart'
 import { Route as CheckoutRouteImport } from './routes/checkout'
 import { Route as ContactRouteImport } from './routes/contact'
@@ -20,12 +21,18 @@ import { Route as MenuRouteImport } from './routes/menu'
 import { Route as OrderRouteImport } from './routes/order'
 import { Route as OrderConfirmationRouteImport } from './routes/order-confirmation'
 import { Route as OurStoryRouteImport } from './routes/our-story'
+import { Route as ResetPasswordRouteImport } from './routes/reset-password'
 import { Route as LocationsIndexRouteImport } from './routes/locations.index'
 import { Route as LocationsShermanOaksRouteImport } from './routes/locations.sherman-oaks'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AuthRoute = AuthRouteImport.update({
+  id: '/auth',
+  path: '/auth',
   getParentRoute: () => rootRouteImport,
 } as any)
 const CartRoute = CartRouteImport.update({
@@ -78,6 +85,11 @@ const OurStoryRoute = OurStoryRouteImport.update({
   path: '/our-story',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ResetPasswordRoute = ResetPasswordRouteImport.update({
+  id: '/reset-password',
+  path: '/reset-password',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const LocationsIndexRoute = LocationsIndexRouteImport.update({
   id: '/',
   path: '/',
@@ -91,6 +103,7 @@ const LocationsShermanOaksRoute = LocationsShermanOaksRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/auth': typeof AuthRoute
   '/cart': typeof CartRoute
   '/checkout': typeof CheckoutRoute
   '/contact': typeof ContactRoute
@@ -101,11 +114,13 @@ export interface FileRoutesByFullPath {
   '/order': typeof OrderRoute
   '/order-confirmation': typeof OrderConfirmationRoute
   '/our-story': typeof OurStoryRoute
+  '/reset-password': typeof ResetPasswordRoute
   '/locations/sherman-oaks': typeof LocationsShermanOaksRoute
   '/locations/': typeof LocationsIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/auth': typeof AuthRoute
   '/cart': typeof CartRoute
   '/checkout': typeof CheckoutRoute
   '/contact': typeof ContactRoute
@@ -115,12 +130,14 @@ export interface FileRoutesByTo {
   '/order': typeof OrderRoute
   '/order-confirmation': typeof OrderConfirmationRoute
   '/our-story': typeof OurStoryRoute
+  '/reset-password': typeof ResetPasswordRoute
   '/locations/sherman-oaks': typeof LocationsShermanOaksRoute
   '/locations': typeof LocationsIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/auth': typeof AuthRoute
   '/cart': typeof CartRoute
   '/checkout': typeof CheckoutRoute
   '/contact': typeof ContactRoute
@@ -131,6 +148,7 @@ export interface FileRoutesById {
   '/order': typeof OrderRoute
   '/order-confirmation': typeof OrderConfirmationRoute
   '/our-story': typeof OurStoryRoute
+  '/reset-password': typeof ResetPasswordRoute
   '/locations/sherman-oaks': typeof LocationsShermanOaksRoute
   '/locations/': typeof LocationsIndexRoute
 }
@@ -138,6 +156,7 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/auth'
     | '/cart'
     | '/checkout'
     | '/contact'
@@ -148,11 +167,13 @@ export interface FileRouteTypes {
     | '/order'
     | '/order-confirmation'
     | '/our-story'
+    | '/reset-password'
     | '/locations/sherman-oaks'
     | '/locations/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
+    | '/auth'
     | '/cart'
     | '/checkout'
     | '/contact'
@@ -162,11 +183,13 @@ export interface FileRouteTypes {
     | '/order'
     | '/order-confirmation'
     | '/our-story'
+    | '/reset-password'
     | '/locations/sherman-oaks'
     | '/locations'
   id:
     | '__root__'
     | '/'
+    | '/auth'
     | '/cart'
     | '/checkout'
     | '/contact'
@@ -177,12 +200,14 @@ export interface FileRouteTypes {
     | '/order'
     | '/order-confirmation'
     | '/our-story'
+    | '/reset-password'
     | '/locations/sherman-oaks'
     | '/locations/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AuthRoute: typeof AuthRoute
   CartRoute: typeof CartRoute
   CheckoutRoute: typeof CheckoutRoute
   ContactRoute: typeof ContactRoute
@@ -193,6 +218,7 @@ export interface RootRouteChildren {
   OrderRoute: typeof OrderRoute
   OrderConfirmationRoute: typeof OrderConfirmationRoute
   OurStoryRoute: typeof OurStoryRoute
+  ResetPasswordRoute: typeof ResetPasswordRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -202,6 +228,13 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/auth': {
+      id: '/auth'
+      path: '/auth'
+      fullPath: '/auth'
+      preLoaderRoute: typeof AuthRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/cart': {
@@ -274,6 +307,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof OurStoryRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/reset-password': {
+      id: '/reset-password'
+      path: '/reset-password'
+      fullPath: '/reset-password'
+      preLoaderRoute: typeof ResetPasswordRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/locations/': {
       id: '/locations/'
       path: '/'
@@ -307,6 +347,7 @@ const LocationsRouteWithChildren = LocationsRoute._addFileChildren(
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AuthRoute: AuthRoute,
   CartRoute: CartRoute,
   CheckoutRoute: CheckoutRoute,
   ContactRoute: ContactRoute,
@@ -317,6 +358,7 @@ const rootRouteChildren: RootRouteChildren = {
   OrderRoute: OrderRoute,
   OrderConfirmationRoute: OrderConfirmationRoute,
   OurStoryRoute: OurStoryRoute,
+  ResetPasswordRoute: ResetPasswordRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
