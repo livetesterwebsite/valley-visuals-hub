@@ -202,6 +202,20 @@ export type Database = {
     }
     Functions: {
       get_my_loyalty: { Args: never; Returns: Json }
+      get_my_redemptions: {
+        Args: never
+        Returns: {
+          r_code: string
+          r_created_at: string
+          r_expires_at: string
+          r_id: string
+          r_is_birthday: boolean
+          r_reward_description: string
+          r_reward_name: string
+          r_status: Database["public"]["Enums"]["redemption_status"]
+        }[]
+      }
+      get_my_referrals: { Args: never; Returns: Json }
       has_role: {
         Args: {
           _role: Database["public"]["Enums"]["app_role"]
@@ -226,6 +240,40 @@ export type Database = {
       staff_award_purchase: {
         Args: { _amount: number; _member: string; _note: string }
         Returns: number
+      }
+      staff_lookup_member: {
+        Args: { _query: string; _staff: string }
+        Returns: {
+          m_balance: number
+          m_full_name: string
+          m_member_id: string
+          m_phone: string
+          m_tier: string
+          m_user_id: string
+        }[]
+      }
+      staff_lookup_redemption: {
+        Args: { _code: string; _staff: string }
+        Returns: {
+          r_code: string
+          r_expires_at: string
+          r_member_id: string
+          r_member_name: string
+          r_reward_name: string
+          r_status: string
+        }[]
+      }
+      staff_recent_awards: {
+        Args: never
+        Returns: {
+          a_created_at: string
+          a_delta: number
+          a_description: string
+          a_id: string
+          a_member_id: string
+          a_member_name: string
+          a_type: Database["public"]["Enums"]["loyalty_entry_type"]
+        }[]
       }
       staff_find_member: {
         Args: { _query: string }
