@@ -22,6 +22,13 @@
       "when": 1795247000145,
       "tag": "0002_restrict_staff_member_lookup",
       "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "7",
+      "when": 1795420000000,
+      "tag": "0003_redemptions_referrals_staff_tools",
+      "breakpoints": true
     }
   ]
 }
