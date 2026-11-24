@@ -8,6 +8,7 @@ import { PageTop } from '@/components/page-top';
 import { useAuth } from '@/lib/auth-context';
 import { lovable } from '@/integrations/lovable';
 import { supabase } from '@/integrations/supabase/client';
+import { referralFromSearch } from '@/lib/loyalty-format';
 
 type AuthMode = 'signin' | 'signup' | 'forgot';
 
@@ -18,10 +19,20 @@ export function AuthPage() {
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState('');
   const [notice, setNotice] = useState('');
+  const [referral, setReferral] = useState('');
 
   useEffect(() => {
     if (!isLoading && user) void navigate({ to: '/loyalty', replace: true });
   }, [isLoading, navigate, user]);
+
+  useEffect(() => {
+    // A friend's link looks like /auth?ref=VGXXXXXX: open the sign-up form with the code filled in.
+    const code = referralFromSearch(window.location.search);
+    if (code) {
+      setReferral(code);
+      setMode('signup');
+    }
+  }, []);
 
   const changeMode = (nextMode: AuthMode) => {
     setMode(nextMode);
@@ -49,6 +60,7 @@ export function AuthPage() {
         const fullName = String(form.get('full_name') ?? '').trim();
         const phone = String(form.get('phone') ?? '').trim();
         const birthday = String(form.get('birthday') ?? '');
+        const referralCode = String(form.get('referral_code') ?? '').trim().toUpperCase();
         const password = String(form.get('password') ?? '');
         const birthdayDate = new Date(`${birthday}T00:00:00`);
         if (!birthday || Number.isNaN(birthdayDate.getTime()) || birthdayDate > new Date() || birthday < '1900-01-01') {
@@ -60,7 +72,7 @@ export function AuthPage() {
           password,
           options: {
             emailRedirectTo: `${window.location.origin}/auth`,
-            data: { full_name: fullName, phone, birthday },
+            data: { full_name: fullName, phone, birthday, ...(referralCode ? { referral_code: referralCode } : {}) },
           },
         });
         if (signupError) throw signupError;
@@ -155,6 +167,10 @@ export function AuthPage() {
                 <div className="auth-field">
                   <Label htmlFor="member-birthday">Birthday</Label>
                   <Input id="member-birthday" name="birthday" type="date" min="1900-01-01" required disabled={busy} />
+                </div>
+                <div className="auth-field">
+                  <Label htmlFor="member-referral">Referral code (optional)</Label>
+                  <Input id="member-referral" name="referral_code" value={referral} onChange={(event) => setReferral(event.target.value.toUpperCase())} maxLength={8} pattern="(VG[0-9A-Fa-f]{6})?" title="A referral code looks like VG followed by 6 letters or numbers." autoComplete="off" disabled={busy} />
                 </div>
               </>
             )}
