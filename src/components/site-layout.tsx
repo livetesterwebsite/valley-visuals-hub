@@ -1,14 +1,81 @@
 import { Link } from '@tanstack/react-router';
 import { useState } from 'react';
-import { ArrowUpRight, MapPin, ShoppingBag, Menu, Instagram, Heart } from 'lucide-react';
+import { ArrowUpRight, MapPin, ShoppingBag, Menu, Instagram, Heart, UserRound, LogOut } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Dialog, DialogContent, DialogTitle, DialogDescription } from '@/components/ui/dialog';
 import { useOrder } from '@/lib/order-context';
+import { useAuth } from '@/lib/auth-context';
 import logo from '@/assets/valley-logo.asset.json';
 const nav = [{to:'/menu',label:'Menu'},{to:'/order',label:'Order'},{to:'/locations',label:'Locations'},{to:'/our-story',label:'Our story'},{to:'/loyalty',label:'Loyalty'},{to:'/gift-cards',label:'Gift cards'},{to:'/contact',label:'Contact'}] as const;
 export function SiteHeader() {
- const [open,setOpen]=useState(false);const {count,total}=useOrder();
- return <><a href="#main-content" className="sr-only focus:not-sr-only">Skip to content</a><header className="site-header"><Link to="/" aria-label="Valley Grounds Coffee home"><img className="site-logo" src={logo.url} alt="Valley Grounds Coffee" /></Link><nav className="nav-links" aria-label="Main navigation">{nav.map(n=><Link key={n.to} to={n.to} activeOptions={{exact:true}}>{n.label}</Link>)}</nav><div className="header-actions"><Link to="/locations" className="header-find flex items-center gap-1 text-[10px] font-extrabold uppercase"><MapPin size={15}/> Find a cafe</Link><Button asChild variant="brand" className="header-order"><Link to="/order">Order now <ArrowUpRight/></Link></Button><Button asChild variant="ghost" size="icon"><Link to="/cart" aria-label={`Cart, ${count} items`}><ShoppingBag size={20}/>{count>0&&<span className="text-primary text-xs">{count}</span>}</Link></Button><Button className="mobile-toggle" variant="ghost" size="icon" aria-label="Open navigation" onClick={()=>setOpen(true)}><Menu/></Button></div></header><div className="announcement"><Heart size={11} fill="currentColor"/><span>GOOD COFFEE. GOOD ENERGY. GROUNDED IN THE VALLEY.</span><span className="announcement-extra">•</span><Link className="announcement-extra" to="/locations">SHERMAN OAKS, CA <ArrowUpRight size={12} className="inline"/></Link></div><Dialog open={open} onOpenChange={setOpen}><DialogContent><DialogTitle>Get grounded.</DialogTitle><DialogDescription>Valley Grounds Coffee</DialogDescription><nav className="grid gap-5 py-5">{nav.map(n=><Link key={n.to} className="display text-3xl" to={n.to} onClick={()=>setOpen(false)}>{n.label}</Link>)}</nav><Button asChild variant="brand"><Link to="/locations" onClick={()=>setOpen(false)}>Find a cafe <MapPin/></Link></Button></DialogContent></Dialog>{count>0&&<Button asChild variant="brand" size="lg" className="sticky-cart"><Link to="/cart"><ShoppingBag/> YOUR ORDER ({count}) · {moneyLocal(total)}</Link></Button>}</>;
+  const [open, setOpen] = useState(false);
+  const [signingOut, setSigningOut] = useState(false);
+  const [signOutError, setSignOutError] = useState('');
+  const { count, total } = useOrder();
+  const { user, isLoading, signOut } = useAuth();
+
+  const handleSignOut = async () => {
+    setSigningOut(true);
+    setSignOutError('');
+    try {
+      await signOut();
+      setOpen(false);
+    } catch {
+      setSignOutError('Could not sign out. Please try again.');
+    } finally {
+      setSigningOut(false);
+    }
+  };
+
+  return (
+    <>
+      <a href="#main-content" className="sr-only focus:not-sr-only">Skip to content</a>
+      <header className="site-header">
+        <Link to="/" aria-label="Valley Grounds Coffee home"><img className="site-logo" src={logo.url} alt="Valley Grounds Coffee" /></Link>
+        <nav className="nav-links" aria-label="Main navigation">
+          {nav.map((item) => <Link key={item.to} to={item.to} activeOptions={{ exact: true }}>{item.label}</Link>)}
+        </nav>
+        <div className="header-actions">
+          <Link to="/locations" className="header-find flex items-center gap-1 text-[10px] font-extrabold uppercase"><MapPin size={15} /> Find a cafe</Link>
+          <Button asChild variant="brand" className="header-order"><Link to="/order">Order now <ArrowUpRight /></Link></Button>
+          {!isLoading && (user ? (
+            <>
+              <Button asChild variant="ghost" size="sm" className="header-member">
+                <Link to="/loyalty" aria-label="My rewards"><UserRound /><span>My rewards</span></Link>
+              </Button>
+              <Button variant="ghost" size="icon" aria-label="Sign out" title="Sign out" disabled={signingOut} onClick={() => void handleSignOut()}>
+                <LogOut />
+              </Button>
+            </>
+          ) : (
+            <Button asChild variant="outline" size="sm" className="header-member">
+              <Link to="/auth" aria-label="Member sign in"><UserRound /><span>Sign in</span></Link>
+            </Button>
+          ))}
+          <Button asChild variant="ghost" size="icon"><Link to="/cart" aria-label={`Cart, ${count} items`}><ShoppingBag size={20} />{count > 0 && <span className="text-primary text-xs">{count}</span>}</Link></Button>
+          <Button className="mobile-toggle" variant="ghost" size="icon" aria-label="Open navigation" onClick={() => setOpen(true)}><Menu /></Button>
+          {signOutError && <span className="header-auth-error" role="status">{signOutError}</span>}
+        </div>
+      </header>
+      <div className="announcement"><Heart size={11} fill="currentColor" /><span>GOOD COFFEE. GOOD ENERGY. GROUNDED IN THE VALLEY.</span><span className="announcement-extra">•</span><Link className="announcement-extra" to="/locations">SHERMAN OAKS, CA <ArrowUpRight size={12} className="inline" /></Link></div>
+      <Dialog open={open} onOpenChange={setOpen}>
+        <DialogContent>
+          <DialogTitle>Get grounded.</DialogTitle>
+          <DialogDescription>Valley Grounds Coffee</DialogDescription>
+          <nav className="grid gap-5 py-5">{nav.map((item) => <Link key={item.to} className="display text-3xl" to={item.to} onClick={() => setOpen(false)}>{item.label}</Link>)}</nav>
+          <div className="mobile-member-actions">
+            {user ? (
+              <Button variant="outline" disabled={signingOut} onClick={() => void handleSignOut()}>SIGN OUT <LogOut /></Button>
+            ) : (
+              <Button asChild variant="brand"><Link to="/auth" onClick={() => setOpen(false)}>MEMBER SIGN IN <UserRound /></Link></Button>
+            )}
+          </div>
+          <Button asChild variant="brand"><Link to="/locations" onClick={() => setOpen(false)}>Find a cafe <MapPin /></Link></Button>
+        </DialogContent>
+      </Dialog>
+      {count > 0 && <Button asChild variant="brand" size="lg" className="sticky-cart"><Link to="/cart"><ShoppingBag /> YOUR ORDER ({count}) · {moneyLocal(total)}</Link></Button>}
+    </>
+  );
 }
 const moneyLocal=(n:number)=>`$${n.toFixed(2)}`;
 export function SiteFooter() {

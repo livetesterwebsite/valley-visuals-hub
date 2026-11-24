@@ -13,6 +13,7 @@ import { useEffect, type ReactNode } from "react";
 import appCss from "../styles.css?url";
 import { reportLovableError } from "../lib/lovable-error-reporting";
 import { OrderProvider } from "@/lib/order-context";
+import { AuthProvider } from "@/lib/auth-context";
 import { SiteHeader, SiteFooter } from "@/components/site-layout";
 
 function NotFoundComponent() {
@@ -121,11 +122,13 @@ function RootComponent() {
 
   return (
     <QueryClientProvider client={queryClient}>
-      <OrderProvider>
-        <SiteHeader />
-        <main id="main-content"><Outlet /></main>
-        <SiteFooter />
-      </OrderProvider>
+      <AuthProvider>
+        <OrderProvider>
+          <SiteHeader />
+          <main id="main-content"><Outlet /></main>
+          <SiteFooter />
+        </OrderProvider>
+      </AuthProvider>
     </QueryClientProvider>
   );
 }
