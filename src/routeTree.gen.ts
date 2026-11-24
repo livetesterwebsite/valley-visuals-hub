@@ -22,6 +22,7 @@ import { Route as OrderRouteImport } from './routes/order'
 import { Route as OrderConfirmationRouteImport } from './routes/order-confirmation'
 import { Route as OurStoryRouteImport } from './routes/our-story'
 import { Route as ResetPasswordRouteImport } from './routes/reset-password'
+import { Route as StaffRouteImport } from './routes/staff'
 import { Route as LocationsIndexRouteImport } from './routes/locations.index'
 import { Route as LocationsShermanOaksRouteImport } from './routes/locations.sherman-oaks'
 
@@ -90,6 +91,11 @@ const ResetPasswordRoute = ResetPasswordRouteImport.update({
   path: '/reset-password',
   getParentRoute: () => rootRouteImport,
 } as any)
+const StaffRoute = StaffRouteImport.update({
+  id: '/staff',
+  path: '/staff',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const LocationsIndexRoute = LocationsIndexRouteImport.update({
   id: '/',
   path: '/',
@@ -115,6 +121,7 @@ export interface FileRoutesByFullPath {
   '/order-confirmation': typeof OrderConfirmationRoute
   '/our-story': typeof OurStoryRoute
   '/reset-password': typeof ResetPasswordRoute
+  '/staff': typeof StaffRoute
   '/locations/sherman-oaks': typeof LocationsShermanOaksRoute
   '/locations/': typeof LocationsIndexRoute
 }
@@ -131,6 +138,7 @@ export interface FileRoutesByTo {
   '/order-confirmation': typeof OrderConfirmationRoute
   '/our-story': typeof OurStoryRoute
   '/reset-password': typeof ResetPasswordRoute
+  '/staff': typeof StaffRoute
   '/locations/sherman-oaks': typeof LocationsShermanOaksRoute
   '/locations': typeof LocationsIndexRoute
 }
@@ -149,6 +157,7 @@ export interface FileRoutesById {
   '/order-confirmation': typeof OrderConfirmationRoute
   '/our-story': typeof OurStoryRoute
   '/reset-password': typeof ResetPasswordRoute
+  '/staff': typeof StaffRoute
   '/locations/sherman-oaks': typeof LocationsShermanOaksRoute
   '/locations/': typeof LocationsIndexRoute
 }
@@ -168,6 +177,7 @@ export interface FileRouteTypes {
     | '/order-confirmation'
     | '/our-story'
     | '/reset-password'
+    | '/staff'
     | '/locations/sherman-oaks'
     | '/locations/'
   fileRoutesByTo: FileRoutesByTo
@@ -184,6 +194,7 @@ export interface FileRouteTypes {
     | '/order-confirmation'
     | '/our-story'
     | '/reset-password'
+    | '/staff'
     | '/locations/sherman-oaks'
     | '/locations'
   id:
@@ -201,6 +212,7 @@ export interface FileRouteTypes {
     | '/order-confirmation'
     | '/our-story'
     | '/reset-password'
+    | '/staff'
     | '/locations/sherman-oaks'
     | '/locations/'
   fileRoutesById: FileRoutesById
@@ -219,6 +231,7 @@ export interface RootRouteChildren {
   OrderConfirmationRoute: typeof OrderConfirmationRoute
   OurStoryRoute: typeof OurStoryRoute
   ResetPasswordRoute: typeof ResetPasswordRoute
+  StaffRoute: typeof StaffRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -314,6 +327,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ResetPasswordRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/staff': {
+      id: '/staff'
+      path: '/staff'
+      fullPath: '/staff'
+      preLoaderRoute: typeof StaffRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/locations/': {
       id: '/locations/'
       path: '/'
@@ -359,6 +379,7 @@ const rootRouteChildren: RootRouteChildren = {
   OrderConfirmationRoute: OrderConfirmationRoute,
   OurStoryRoute: OurStoryRoute,
   ResetPasswordRoute: ResetPasswordRoute,
+  StaffRoute: StaffRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
